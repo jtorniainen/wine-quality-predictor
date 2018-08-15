@@ -1,13 +1,12 @@
-# import seaborn as sns
-# import matplotlib.pyplot as plt
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+import autosklearn.regression
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn import linear_model
-import pandas as pd
-import seaborn as sns
+from sklearn import metrics
 from sklearn.metrics import mean_squared_error, r2_score
-import matplotlib.pyplot as plt
-import autosklearn.regression
 
 if __name__ == '__main__':
     # Load data from CSV
@@ -17,7 +16,9 @@ if __name__ == '__main__':
     # Train-Test split
     df_train, df_test = train_test_split(df, test_size=.20, random_state=1)
 
-    # ----- 1. Manual (linear model) -----
+    # ----- 1. Manual -----
+    # ----- 1a. Linear regression -----
+    
     X_train = df_train.iloc[0:,0:11]
     y_train = df_train.iloc[0:,11]
     X_test = df_test.iloc[0:,0:11]
@@ -31,12 +32,22 @@ if __name__ == '__main__':
     y_pred = reg.predict(X_test)
     y_pred_int = np.round(y_pred)
     print("Mean squared error: ", mean_squared_error(y_test, y_pred))
+    #print("Accuracy:", metrics.accuracy_score(y_test, y_pred))
 
     f, ax = plt.subplots(1)
     sns.distplot(y_test, kde=False, ax=ax)
     sns.distplot(y_pred_int, kde=False, ax=ax)
     ax.set_title('Linear Regression')
-
+    
+    # ----- 1b. Random Forest -----
+    
+    from sklearn.ensemble import RandomForestClassifier    
+    clf = RandomForestClassifier(n_estimators=100)
+    clf.fit(X_train,y_train)
+    y_pred = clf.predict(X_test)
+    print("Mean squared error: ", mean_squared_error(y_test, y_pred))
+    print("Accuracy:", metrics.accuracy_score(y_test, y_pred))
+    
     # ----- 2. Automatic -----
     # Load data from CSV
     df = pd.read_csv('winequality-white.csv', sep=';')
@@ -66,7 +77,7 @@ if __name__ == '__main__':
     y_pred_int = np.round(y_pred)
     r2 = r2_score(y_test, y_pred_int)
     mse = mean_squared_error(y_test, y_pred_int)
-
+    #print("AutoMLAccuracy:", metrics.accuracy_score(y_test, y_pred))
     # Visualize results
     f, ax = plt.subplots(1)
     sns.distplot(y_test, kde=False, ax=ax)
