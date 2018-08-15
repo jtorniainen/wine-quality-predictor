@@ -16,27 +16,26 @@ if __name__ == '__main__':
     # Train-Test split
     df_train, df_test = train_test_split(df, test_size=.20, random_state=1)
 
+    X_train = df_train.drop('quality', axis=1)
+    y_train = df_train['quality']
+
+    X_test = df_test.drop('quality', axis=1)
+    y_test = df_test['quality']
+
     # ----- 1. Manual -----
     # ----- 1a. Linear regression -----
-    
-    X_train = df_train.iloc[0:,0:11]
-    y_train = df_train.iloc[0:,11]
-    X_test = df_test.iloc[0:,0:11]
-    y_test = df_test.iloc[0:,11]
 
     reg = linear_model.LinearRegression()
     reg.fit(X_train, y_train)
     linear_model.LinearRegression(copy_X=True, fit_intercept=True, n_jobs=1, normalize=False)
 
     #print(reg.coef_)
-    y_pred = reg.predict(X_test)
-    y_pred_int = np.round(y_pred)
-    print("Mean squared error: ", mean_squared_error(y_test, y_pred))
-    #print("Accuracy:", metrics.accuracy_score(y_test, y_pred))
-
+    reg_y_pred = reg.predict(X_test)
+    reg_y_pred_int = np.round(reg_y_pred)
+    
     f, ax = plt.subplots(1)
     sns.distplot(y_test, kde=False, ax=ax)
-    sns.distplot(y_pred_int, kde=False, ax=ax)
+    sns.distplot(reg_y_pred_int, kde=False, ax=ax)
     ax.set_title('Linear Regression')
     
     # ----- 1b. Random Forest -----
@@ -44,22 +43,12 @@ if __name__ == '__main__':
     from sklearn.ensemble import RandomForestClassifier    
     clf = RandomForestClassifier(n_estimators=100)
     clf.fit(X_train,y_train)
-    y_pred = clf.predict(X_test)
-    print("Mean squared error: ", mean_squared_error(y_test, y_pred))
-    print("Accuracy:", metrics.accuracy_score(y_test, y_pred))
+    rfc_y_pred = clf.predict(X_test)
+    rfc_y_pred_int = np.round(rfc_y_pred)
     
     # ----- 2. Automatic -----
     # Load data from CSV
-    df = pd.read_csv('winequality-white.csv', sep=';')
 
-    # Train-Test split
-    df_train, df_test = train_test_split(df, test_size=.20, random_state=1)
-
-    X_train = df_train.drop('quality', axis=1)
-    y_train = df_train['quality']
-
-    X_test = df_test.drop('quality', axis=1)
-    y_test = df_test['quality']
 
     feature_types = ['numerical'] * 11
 
@@ -87,3 +76,10 @@ if __name__ == '__main__':
     plt.show()
 
     # 3. Comparison of results from 1 and 2
+    
+    # Linear Regression
+    print("Mean squared error for linear regression: ", mean_squared_error(y_test, reg_y_pred))
+    print("Accuracy for linear regression:", metrics.accuracy_score(y_test, reg_y_pred_int))   
+    # Random Forest
+    print("Mean squared error for random forest: ", mean_squared_error(y_test, rfc_y_pred_int))
+    print("Accuracy for random forest:", metrics.accuracy_score(y_test, rfc_y_pred_int))    
