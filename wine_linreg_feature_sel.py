@@ -6,7 +6,22 @@ Created on Thu Aug 16 13:27:33 2018
 @author: arun
 """
 
-# With feature selection
+if __name__ == '__main__':
+    # Load data from CSV
+    # df = pd.read_csv('https://raw.githubusercontent.com/jtorniainen/wine-quality-predictor/master/winequality-white.csv', sep=';')
+    df = pd.read_csv('winequality-white.csv', sep=';')
+
+    # Train-Test split
+    df_train, df_test = train_test_split(df, test_size=.20, random_state=1)
+
+    X_train_unscaled = df_train.drop('quality', axis=1) 
+    y_train = df_train['quality']
+
+    X_test_unscaled = df_test.drop('quality', axis=1)
+    y_test = df_test['quality']
+    
+
+    # With feature selection
     
     # using extra trees classified
 #    from sklearn.ensemble import ExtraTreesClassifier

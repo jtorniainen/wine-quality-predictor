@@ -24,12 +24,25 @@ if __name__ == '__main__':
     # Train-Test split
     df_train, df_test = train_test_split(df, test_size=.20, random_state=1)
 
-    X_train = df_train.drop('quality', axis=1) 
+    X_train_unscaled = df_train.drop('quality', axis=1) 
     y_train = df_train['quality']
 
-    X_test = df_test.drop('quality', axis=1)
+    X_test_unscaled = df_test.drop('quality', axis=1)
     y_test = df_test['quality']
     
+    # Applying normalization
+    from sklearn import preprocessing    
+    normalizer = preprocessing.Normalizer().fit(X_train_unscaled)
+    X_train = normalizer.transform(X_train_unscaled) 
+    X_test = normalizer.transform(X_test_unscaled)
+    
+#    # Removing normalization
+#    X_train = X_train_unscaled
+#    X_test = X_test_unscaled
+    features_selected = [2, 5, 8, 9, 10, 11]
+    X_train_fsel = X_train[X_train.columns[features_selected]]       
+    X_test_fsel = X_test[X_test.columns[features_selected]]   
+        
     from sklearn.ensemble import RandomForestClassifier    
     clf = RandomForestClassifier(n_estimators=100)
     clf.fit(X_train,y_train)
