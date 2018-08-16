@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
+from sklearn.metrics import r2_score, mean_squared_error
 
 
 if __name__ == '__main__':
@@ -24,17 +25,20 @@ if __name__ == '__main__':
     ax.set_ylabel('True')
     ax.set_title('True vs predicted values')
 
+    r2_automl = r2_score(y_test, automl_y)
+    mse_automl = mean_squared_error(y_test, automl_y)
+
+    bbox = {'facecolor': 'wheat'}
+    ax.text(0.05, .95, 'R2  = {:0.2f}\nMSE = {:0.2f}'.format(r2_automl, mse_automl), transform=ax.transAxes, ha='left', va='top', bbox=bbox)
 
     ax = axes[1]
 
     x = np.unique(y_test)
-    # y = np.random.rand(len(x)) * 100
 
     y = []
     for value in x:
         idx = np.where(y_test == value)
         y.append(np.mean(y_test[idx] == automl_y[idx]) * 100)
-
 
     x = x.astype(int)
     sns.barplot(x, y, ax=ax, color='C0')
@@ -47,4 +51,6 @@ if __name__ == '__main__':
     for pos, percent in enumerate(y):
         ax.text(pos, percent, '{:d}%'.format(int(percent)), ha='center', va='bottom', color='C0')
     ax.text(2.5, 100, '\nTotal accuracy = {:d}%'.format(int(total_acc)), ha='center', va='top', color='C0')
+    f.suptitle('auto-sklearn test set performance', fontweight='bold')
+
     plt.show()

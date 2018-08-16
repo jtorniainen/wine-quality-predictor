@@ -12,6 +12,7 @@ def read_log(filename):
     regressors = []
     rescalers = []
     idx = 0
+
     for line in content:
         if 'preprocessor:__choice__' in line:
             preprocessors.append(line.split('Value: ')[1].replace("'", '').strip())
@@ -26,7 +27,8 @@ def read_log(filename):
 
 
 if __name__ == '__main__':
-    df = read_log('automl_no_pp.log')
+    df = read_log('automl.log')
+    # df = read_log('automl_no_pp.log')
     # df = pd.read_pickle('automl.p')
     # df = df.drop_duplicates()
 
