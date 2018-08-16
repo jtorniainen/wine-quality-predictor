@@ -90,6 +90,12 @@ if __name__ == '__main__':
     selector = selector.fit(X_train, y_train)
     print(selector.support_)
     
+    # select the features, i.e., column numbers
+    features_selected = []
+    for i in range(0,selector.support_.size):
+        if selector.support_[i]==True:
+            features_selected.append(i)
+    
     X_train_fsel = X_train[X_train.columns[features_selected]]
     X_test_fsel = X_test[X_test.columns[features_selected]]    
     
