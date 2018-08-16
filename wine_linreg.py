@@ -104,46 +104,8 @@ if __name__ == '__main__':
     linear_model.LinearRegression(copy_X=True, fit_intercept=True, n_jobs=1, normalize=False)
    
     reg_fsel_y_pred = reg.predict(X_test_fsel)
-    reg_fsel_y_pred_int = np.round(reg_fsel_y_pred)
-          
-    # ----- 1b. Random Forest -----
+    reg_fsel_y_pred_int = np.round(reg_fsel_y_pred)          
     
-    from sklearn.ensemble import RandomForestClassifier    
-    clf = RandomForestClassifier(n_estimators=100)
-    clf.fit(X_train,y_train)
-    rfc_y_pred = clf.predict(X_test)
-    rfc_y_pred_int = np.round(rfc_y_pred)
-    
-    # ----- 2. Automatic -----
-    # Load data from CSV
-
-
-    feature_types = ['numerical'] * 11
-
-    # Initialize auto learning object
-    automl = autosklearn.regression.AutoSklearnRegressor(time_left_for_this_task=120,
-                                                         per_run_time_limit=30,
-                                                         tmp_folder='/tmp/kekkonen2412gj13412124',
-                                                         output_folder='/tmp/wine-out12412431g1412444kjj')
-
-    # Fit data
-    automl.fit(X_train, y_train, dataset_name='wine-quality', feat_type=feature_types)
-
-    # Get prediction for test set
-    automl_y_pred = automl.predict(X_test)
-    automl_y_pred_int = np.round(automl_y_pred)
-    r2 = r2_score(y_test, automl_y_pred_int)
-       
-    # Visualize results
-    
-    f, ax = plt.subplots(1)
-    sns.distplot(y_test, kde=False, ax=ax)
-    sns.distplot(automl_y_pred_int, kde=False, ax=ax)
-    ax.set_title('AutoML')
-
-    plt.show()
-
-    # 3. Comparison of results from 1a, 1b, and 2
     
     # Linear Regression
     print("Mean squared error for linear regression: ", round(mean_squared_error(y_test, reg_y_pred)*100))
@@ -151,10 +113,6 @@ if __name__ == '__main__':
     # Linear Regression with feature selection        
     print("Mean squared error for linear regression with feature selection: ", round(mean_squared_error(y_test, reg_fsel_y_pred)*100))
     print("Accuracy for linear regression  with feature selection:", round(metrics.accuracy_score(y_test, reg_fsel_y_pred_int)*100))    
-    # Random Forest
-    print("Mean squared error for random forest: ", round(mean_squared_error(y_test, rfc_y_pred_int)*100))
-    print("Accuracy for random forest:", round(metrics.accuracy_score(y_test, rfc_y_pred_int)*100))
-    # Auto ML
-    print("Mean squared error for AutoML: ", round(mean_squared_error(y_test, automl_y_pred_int)*100))
-    print("Accuracy for AutoML:", round(metrics.accuracy_score(y_test, automl_y_pred_int)*100))
+
+    
     
