@@ -1,10 +1,17 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Thu Aug 16 13:27:33 2018
+Created on Thu Aug 15 13:11:32 2018
 
-@author: arun
+@author: UWT
 """
+
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn import linear_model
+from sklearn import metrics
+from sklearn.metrics import mean_squared_error
 
 if __name__ == '__main__':
     # Load data from CSV
@@ -19,9 +26,6 @@ if __name__ == '__main__':
 
     X_test_unscaled = df_test.drop('quality', axis=1)
     y_test = df_test['quality']
-    
-
-    # With feature selection
     
     # using extra trees classified
 #    from sklearn.ensemble import ExtraTreesClassifier

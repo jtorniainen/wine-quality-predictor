@@ -1,3 +1,11 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Aug 14 13:11:32 2018
+
+@author: UWT
+"""
+
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -43,5 +51,5 @@ if __name__ == '__main__':
     reg_y_pred_int = np.round(reg_y_pred) # round it to integers   
     
     # Print results
-    print("Mean squared error for linear regression: ", round(mean_squared_error(y_test, reg_y_pred)*100))
+    print("Mean squared error for linear regression: ", round(mean_squared_error(y_test, reg_y_pred_int)*100))
     print("Accuracy for linear regression:", round(metrics.accuracy_score(y_test, reg_y_pred_int)*100))      
