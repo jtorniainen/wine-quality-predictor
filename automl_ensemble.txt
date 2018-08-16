@@ -1,0 +1,17 @@
+[(0.840000, SimpleRegressionPipeline({'categorical_encoding:one_hot_encoding:minimum_fraction': 0.01, 'regressor:random_forest:bootstrap': 'True', 'preprocessor:__choice__': 'no_preprocessing', 'regressor:random_forest:max_depth': 'None', 'categorical_encoding:__choice__': 'one_hot_encoding', 'regressor:random_forest:min_samples_leaf': 1, 'imputation:strategy': 'mean', 'regressor:random_forest:min_weight_fraction_leaf': 0.0, 'regressor:random_forest:n_estimators': 100, 'rescaling:__choice__': 'standardize', 'regressor:random_forest:min_samples_split': 2, 'regressor:random_forest:max_leaf_nodes': 'None', 'categorical_encoding:one_hot_encoding:use_minimum_fraction': 'True', 'regressor:random_forest:min_impurity_decrease': 0.0, 'regressor:random_forest:max_features': 1.0, 'regressor:__choice__': 'random_forest', 'regressor:random_forest:criterion': 'mse'},
+dataset_properties={
+  'multilabel': False,
+  'multiclass': False,
+  'signed': False,
+  'target_type': 'regression',
+  'task': 4,
+  'sparse': False})),
+(0.160000, SimpleRegressionPipeline({'preprocessor:fast_ica:algorithm': 'deflation', 'regressor:random_forest:bootstrap': 'True', 'preprocessor:__choice__': 'fast_ica', 'regressor:random_forest:max_depth': 'None', 'categorical_encoding:__choice__': 'one_hot_encoding', 'preprocessor:fast_ica:n_components': 1337, 'preprocessor:fast_ica:fun': 'logcosh', 'regressor:random_forest:min_samples_leaf': 1, 'imputation:strategy': 'median', 'regressor:random_forest:min_weight_fraction_leaf': 0.0, 'regressor:random_forest:n_estimators': 100, 'rescaling:__choice__': 'normalize', 'preprocessor:fast_ica:whiten': 'True', 'regressor:random_forest:min_samples_split': 20, 'regressor:random_forest:max_leaf_nodes': 'None', 'categorical_encoding:one_hot_encoding:use_minimum_fraction': 'False', 'regressor:random_forest:min_impurity_decrease': 0.0, 'regressor:random_forest:max_features': 0.6561798912731479, 'regressor:__choice__': 'random_forest', 'regressor:random_forest:criterion': 'friedman_mse'},
+dataset_properties={
+  'multilabel': False,
+  'multiclass': False,
+  'signed': False,
+  'target_type': 'regression',
+  'task': 4,
+  'sparse': False})),
+]
