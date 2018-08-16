@@ -3,7 +3,6 @@ import pandas as pd
 if __name__ == '__main__':
     target_file = '/home/jarto/work/wine-quality-predictor/b87fe6d2-ab92-4d36-8946-111850523f12/AutoML(1):wine-quality.log'
 
-
     with open(target_file, 'r') as file_h:
         content = file_h.readlines()
 
